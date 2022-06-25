@@ -1391,12 +1391,14 @@ of QUALITY."
 
 (defun org-drill--read-key-sequence (prompt)
   "Just like `read-key-sequence' but with input method turned off."
-  (let ((old-input-method current-input-method))
+  (let ((old-input-method current-input-method)
+        (old-default-input-method default-input-method))
     (unwind-protect
         (progn
           (set-input-method nil)
           (read-key-sequence prompt))
-      (set-input-method old-input-method))))
+      (set-input-method old-input-method)
+      (setq default-input-method old-default-input-method))))
 
 (defun org-drill-reschedule (session)
   "Returns quality rating (0-5), or nil if the user quit."
